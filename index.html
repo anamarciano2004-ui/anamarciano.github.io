@@ -107,7 +107,7 @@
 <!-- FASE 1: VÔLEI -->
 <div id="fase1" class="screen">
     <div class="console-box">
-        <h1>🏐 WORLD 1-1</h1>
+        <h1> WORLD 1-1</h1>
         <h2>O Início de Tudo</h2>
         <div id="q1-box">
             <p><strong>PERGUNTA:</strong> Onde nossa aventura e história começou?</p>
@@ -142,8 +142,8 @@
         <h2>Desbloqueando Sentimentos</h2>
         <div id="q2-box">
             <p><strong>PERGUNTA:</strong> Quem teve a atitude de falar o primeiro "Eu te amo" da nossa história?</p>
-            <button class="quiz-btn" onclick="correctQuiz('q2-box', 'g2-box')">Walter (O romântico) ❤️</button>
-            <button class="quiz-btn" onclick="wrong()">Ana (Estava tímida)</button>
+            <button class="quiz-btn" onclick="correctQuiz('q2-box', 'g2-box')">Walter </button>
+            <button class="quiz-btn" onclick="wrong()">Ana </button>
         </div>
         <div id="g2-box" style="display:none;">
             <p>✨ Acertou! Encontre os pares no quebra-cabeça da memória:</p>
@@ -167,8 +167,9 @@
         <div id="q3-box">
             <p><strong>PERGUNTA:</strong> Para onde foi a nossa primeiríssima viagem juntos?</p>
             <button class="quiz-btn" onclick="wrong()">Balneário Camboriú</button>
-            <button class="quiz-btn" onclick="correctQuiz('q3-box', 'g3-box')">Pontal do Sul 🌊</button>
+            <button class="quiz-btn" onclick="correctQuiz('q3-box', 'g3-box')">Pontal do Sul </button>
             <button class="quiz-btn" onclick="wrong()">Guaratuba</button>
+            <button class="quiz-btn" onclick="wrong()">Morretes</button>
         </div>
         <div id="g3-box" style="display:none;">
             <p>✨ Boa! Pilote e desvie dos cones amarelos na estrada de Pontal!</p>
@@ -196,7 +197,7 @@
         <div id="q4-box">
             <p><strong>PERGUNTA:</strong> Qual é o apelido carinhoso que a Ana mais usa para você?</p>
             <button class="quiz-btn" onclick="wrong()">Amor</button>
-            <button class="quiz-btn" onclick="correctQuiz('q4-box', 'g4-box')">Moi 🥰</button>
+            <button class="quiz-btn" onclick="correctQuiz('q4-box', 'g4-box')">Moi </button>
             <button class="quiz-btn" onclick="wrong()">Lindo</button>
         </div>
         <div id="g4-box" style="display:none;">
@@ -226,13 +227,14 @@
             <p><strong>PERGUNTA:</strong> Qual jogo nós jogamos muito e somos super competitivos juntos?</p>
             <button class="quiz-btn" onclick="wrong()">Fortnite</button>
             <button class="quiz-btn" onclick="wrong()">Mario Kart</button>
-            <button class="quiz-btn" onclick="correctQuiz('q5-box', 'g5-box')">Brawl Stars 💥</button>
+            <button class="quiz-btn" onclick="correctQuiz('q5-box', 'g5-box')">Brawl Stars </button>
+             <button class="quiz-btn" onclick="wrong()">The Sims</button>
         </div>
         <div id="g5-box" style="display:none;">
-            <p>✨ Perfeito! Agora sobreviva por 25 segundos desviando dos obstáculos do Brawl Runner!</p>
+            <p>✨ Perfeito! Agora sobreviva por 20 segundos desviando dos obstáculos do Brawl Runner!</p>
             <button class="start-game-btn" id="btn-start-g5" onclick="setupDinoGame()">INICIAR DESAFIO SUPREMO</button>
             <div id="g5-playground" style="display:none;">
-                <p class="stat" id="dino-timer">Tempo restante: 25s</p>
+                <p class="stat" id="dino-timer">Tempo restante: 20s</p>
                 <canvas id="canvas-dino" width="300" height="120"></canvas>
                 <button id="btn-jump" onclick="jump()" style="background:#ef4444; width:100%; margin-top:5px;">PULAR (OU ESPAÇO)</button>
             </div>
