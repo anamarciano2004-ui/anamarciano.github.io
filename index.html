@@ -74,24 +74,26 @@
     .stat { color: #38bdf8; font-weight: bold; }
     img { max-width: 100%; border-radius: 10px; border: 4px solid #fff; margin-top: 15px; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
     #canvas-dino { background: #334155; border: 2px solid #fff; border-radius: 10px; display: block; margin: 15px auto; }
-    #timer { font-size: 13px; color: #a7f3d0; margin: 10px 0; background: #0f172a; padding: 8px; border-radius: 5px; }
+    #timer { font-size: 13px; color: #a7f3d0; margin: 10px 0; background: #0f172a; padding: 8px; border-radius: 5px; line-height: 1.4; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
+<!-- TELA INICIAL -->
 <div id="start" class="screen active">
     <div class="console-box">
         <h1>🎮 WALTER'S ADVENTURE </h1>
         <h2>Birthday & Valentine's Edition</h2>
-        <div id="timer">Carregando tempo de aventura...</div>
-        <div class="progress-container"><div class="progress-bar" id="p-start"></div></div>
+        <div id="timer">Calculando tempo de jogo...</div>
+        <div class="progress-container"><div class="progress-bar" id="p-start" style="width: 5%;"></div></div>
         <p><strong>PLAYER 1:</strong> Walter Wormes<br><strong>LEVEL:</strong> 24 | <strong>COMPANION:</strong> Ana ❤️</p>
         <button onclick="go('fase1', 20)">PRESS START</button>
     </div>
 </div>
 
+<!-- FASE 1: VÔLEI -->
 <div id="fase1" class="screen">
     <div class="console-box">
         <h1>🏐 WORLD 1-1</h1>
@@ -111,6 +113,7 @@
     </div>
 </div>
 
+<!-- FASE 2: EU TE AMO -->
 <div id="fase2" class="screen">
     <div class="console-box">
         <h1>❤️ WORLD 1-2</h1>
@@ -128,6 +131,7 @@
     </div>
 </div>
 
+<!-- FASE 3: VIAGEM PONTAL -->
 <div id="fase3" class="screen">
     <div class="console-box">
         <h1>🚗 WORLD 1-3</h1>
@@ -146,6 +150,7 @@
     </div>
 </div>
 
+<!-- FASE 4: MINIGAME DINOSSAURO (MARIO RUNNER) -->
 <div id="fase4" class="screen">
     <div class="console-box">
         <h1>🏃 WORLD 1-4</h1>
@@ -153,7 +158,7 @@
         <p>Sobreviva por 15 segundos pulando os obstáculos para ganhar o prêmio supremo!</p>
         <p class="stat" id="dino-timer">Tempo restante: 15s</p>
         <canvas id="canvas-dino" width="300" height="120"></canvas>
-        <button id="btn-jump" onclick="jump()" style="background:#38bdf8; border-color:#0284c7; box-shadow:0 4px #0369a1;">PULAR (OU ESPAÇO)</button>
+        <button id="btn-jump" onclick="jump()" style="background:#38bdf8; border-color:#0284c7; box-shadow:0 4px #0369a1; width:100%;">PULAR (OU ESPAÇO)</button>
         
         <div id="r4" class="reward-box" style="display:none;">
             <h3>🏆 ULTRA LOOT DESBLOQUEADO!</h3>
@@ -164,6 +169,7 @@
     </div>
 </div>
 
+<!-- TELA BALNEÁRIO -->
 <div id="balneario" class="screen">
     <div class="console-box">
         <h1>🌊 MISSÃO EXTRA DESBLOQUEADA</h1>
@@ -178,6 +184,7 @@
     </div>
 </div>
 
+<!-- TELA FINAL: O CHEFE E AS ESTATÍSTICAS -->
 <div id="final" class="screen">
     <div class="console-box" style="max-width: 600px;">
         <h1>🎂 LEVEL 24 CONCLUÍDO 🎂</h1>
@@ -198,24 +205,134 @@
 </div>
 
 <script>
-    // Configuração do Contador de Tempo Real
-    const dataNamoro = new Date("2024-05-01T00:00:00");
+    // Configuração segura do Contador de Tempo Real (Ano, Mês, Dia)
     function atualizarContador() {
+        const dataNamoro = new Date(2024, 4, 1); // 01 de Maio de 2024 (Mês no JS começa em 0)
         const agora = new Date();
         const diferenca = agora - dataNamoro;
         
-        const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365));
+        if (isNaN(diferenca)) return;
+
+        const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365.25));
         const diasTotais = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-        const meses = Math.floor((diasTotais % 365) / 30);
-        const dias = Math.floor((diasTotais % 365) % 30);
+        const meses = Math.floor((diasTotais % 365) / 30.43);
+        const dias = Math.floor((diasTotais % 365) % 30.43);
         const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
         const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
 
-        document.getElementById("timer").innerHTML = `❤️ TEMPO DE AVENTURA:<br>${anos} anos, ${meses} meses, ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+        const timerEl = document.getElementById("timer");
+        if (timerEl) {
+            timerEl.innerHTML = `❤️ TEMPO DE AVENTURA:<br>${anos} anos, ${meses} meses, ${dias} dias,<br>${horas}h ${minutos}m ${segundos}s`;
+        }
     }
+    
+    // Inicializa o contador imediatamente e define o intervalo
+    atualizarContador();
     setInterval(atualizarContador, 1000);
 
-    // Sistema de Navegação
+    // Sistema de Navegação entre telas
     function go(screenId, pct) {
-        document.querySelectorAll('.screen
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        const nextScreen = document.getElementById(screenId);
+        if (nextScreen) {
+            nextScreen.classList.add('active');
+            // Enche a barra de progresso de todas as telas correspondentes
+            document.querySelectorAll('.progress-bar').forEach(b => b.style.width = pct + '%');
+        }
+    }
+
+    function winReward(id) { 
+        const reward = document.getElementById(id);
+        if (reward) reward.style.display = 'block'; 
+    }
+    
+    function wrong() { 
+        alert("Errou feio, errou rude! Tenta de novo 😜"); 
+    }
+
+    // MECÂNICA DO MINIGAME DINOSSAURO (MARIO RUNNER)
+    const canvas = document.getElementById('canvas-dino');
+    let ctx = canvas ? canvas.getContext('2d') : null;
+    let dinoY = 90, dinoVy = 0, isJumping = false;
+    let obstacleX = 320, obstacleSpeed = 4, score = 15;
+    let gameInterval, timerInterval, gameRunning = false;
+
+    function startDinoPhase() {
+        go('fase4', 75);
+        if (!gameRunning) {
+            gameRunning = true;
+            score = 15;
+            obstacleX = 320;
+            dinoY = 90;
+            gameInterval = setInterval(updateGame, 20);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+    }
+
+    function jump() {
+        if (!isJumping && gameRunning) { dinoVy = -8; isJumping = true; }
+    }
+    window.addEventListener('keydown', (e) => { if (e.code === 'Space') jump(); });
+
+    function updateTimer() {
+        score--;
+        const dinoTimerEl = document.getElementById('dino-timer');
+        if (dinoTimerEl) dinoTimerEl.innerText = `Tempo restante: ${score}s`;
+        
+        if (score <= 0) {
+            clearInterval(gameInterval);
+            clearInterval(timerInterval);
+            gameRunning = false;
+            const r4 = document.getElementById('r4');
+            const btnJump = document.getElementById('btn-jump');
+            if (r4) r4.style.display = 'block';
+            if (btnJump) btnJump.style.display = 'none';
+        }
+    }
+
+    function updateGame() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Gravidade e Pulo
+        dinoY += dinoVy;
+        if (dinoY < 90) dinoVy += 0.5;
+        else { dinoY = 90; dinoVy = 0; isJumping = false; }
+
+        // Desenha Jogador (Quadradinho Vermelho estilo Mario Retro)
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(30, dinoY, 20, 20);
+
+        // Mover Obstáculo (Casco/Cone)
+        obstacleX -= obstacleSpeed;
+        if (obstacleX < -15) obstacleX = 320 + Math.random() * 50;
+
+        // Desenha Obstáculo
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(obstacleX, 95, 15, 15);
+
+        // Colisão simples
+        if (obstacleX > 30 && obstacleX < 50 && dinoY >= 75) {
+            alert("💥 Você bateu no obstáculo! O jogo reiniciou a fase!");
+            obstacleX = 320;
+            score = 15;
+        }
+    }
+
+    function endGame() {
+        go('final', 100);
+        // Explosão de confetes ao chegar na carta final
+        if (typeof confetti === 'function') {
+            var duration = 4 * 1000;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    }
+</script>
+</body>
+</html>
