@@ -231,10 +231,10 @@
              <button class="quiz-btn" onclick="wrong()">The Sims</button>
         </div>
         <div id="g5-box" style="display:none;">
-            <p>✨ Perfeito! Agora sobreviva por 20 segundos desviando dos obstáculos do Brawl Runner!</p>
+            <p>✨ Perfeito! Agora sobreviva por 15 segundos desviando dos obstáculos do Brawl Runner!</p>
             <button class="start-game-btn" id="btn-start-g5" onclick="setupDinoGame()">INICIAR DESAFIO SUPREMO</button>
             <div id="g5-playground" style="display:none;">
-                <p class="stat" id="dino-timer">Tempo restante: 20s</p>
+                <p class="stat" id="dino-timer">Tempo restante: 15s</p>
                 <canvas id="canvas-dino" width="300" height="120"></canvas>
                 <button id="btn-jump" onclick="jump()" style="background:#ef4444; width:100%; margin-top:5px;">PULAR (OU ESPAÇO)</button>
             </div>
@@ -405,11 +405,11 @@
     }
 
     // === GAME 5: DINO RUNNER ===
-    let dY = 90, dVy = 0, dJump = false, oX = 320, oSpd = 5, dTime = 20;
+    let dY = 90, dVy = 0, dJump = false, oX = 320, oSpd = 5, dTime = 15;
     function setupDinoGame() {
         document.getElementById('btn-start-g5').style.display = 'none';
         document.getElementById('g5-playground').style.display = 'block';
-        dTime = 20; oX = 320; oSpd = 5; dY = 90; dVy = 0;
+        dTime = 15; oX = 320; oSpd = 5; dY = 90; dVy = 0;
         let c = document.getElementById('canvas-dino'); let ctx = c.getContext('2d');
         window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
         
@@ -420,7 +420,7 @@
             ctx.fillStyle = '#ef4444'; ctx.fillRect(30, dY, 20, 20);
             oX -= oSpd; if(oX < -15) oX = 320 + Math.random()*40;
             ctx.fillStyle = '#38bdf8'; ctx.fillRect(oX, 95, 15, 15);
-            if(oX > 25 && oX < 50 && dY >= 75) { alert("💥 Bateu! Tente focar no tempo!"); oX = 320; dTime = 20; oSpd = 5; dY = 90; }
+            if(oX > 25 && oX < 50 && dY >= 75) { alert("💥 Bateu! Tente focar no tempo!"); oX = 320; dTime = 15; oSpd = 5; dY = 90; }
         }, 20); activeIntervals.push(tLoop, gLoop);
     }
     function jump() { if(!dJump) { dVy = -8; dJump = true; } }
