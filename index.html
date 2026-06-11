@@ -3,470 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walter's Adventure</title>
-
+<title>Walter's Adventure - Level 24</title>
 <style>
-body{
-margin:0;
-background:linear-gradient(180deg,#07152e,#0b2447);
-color:white;
-font-family:'Trebuchet MS',sans-serif;
-text-align:center;
-overflow-x:hidden;
-}
-
-.screen{
-display:none;
-min-height:100vh;
-padding:40px 20px;
-box-sizing:border-box;
-}
-
-.active{
-display:block;
-}
-
-.game-card{
-max-width:800px;
-margin:auto;
-background:#13284a;
-border:4px solid #ffd700;
-border-radius:25px;
-padding:30px;
-box-shadow:0 0 25px rgba(255,215,0,.3);
-}
-
-h1{
-color:#ffd700;
-text-shadow:0 0 10px rgba(255,215,0,.5);
-}
-
-button{
-background:#ffd700;
-border:none;
-padding:15px 25px;
-font-size:18px;
-border-radius:12px;
-cursor:pointer;
-margin-top:20px;
-transition:.2s;
-font-weight:bold;
-}
-
-button:hover{
-transform:scale(1.08);
-}
-
-.reward{
-background:#1f355c;
-padding:20px;
-margin:20px auto;
-max-width:600px;
-border-radius:15px;
-}
-
-.progress{
-width:80%;
-margin:20px auto;
-background:#1f355c;
-border-radius:20px;
-overflow:hidden;
-}
-
-.progress-bar{
-height:25px;
-width:0%;
-background:#ffd700;
-transition:1s;
-}
-
-.achievement{
-background:#224e24;
-border:2px solid #90ee90;
-padding:15px;
-margin-top:20px;
-border-radius:15px;
-}
-
-.counter{
-font-size:20px;
-margin:20px 0;
-color:#ffe082;
-}
-
-.screen{
-    display:none;
-    min-height:100vh;
-    padding:40px 20px;
-    box-sizing:border-box;
-}
-
-.active{
-    display:block;
-}
-
-h1{
-    color:#ffcc00;
-}
-
-button{
-    background:#ffcc00;
-    border:none;
-    padding:15px 25px;
-    font-size:18px;
-    border-radius:10px;
-    cursor:pointer;
-    margin-top:20px;
-}
-
-button:hover{
-    transform:scale(1.05);
-}
-
-.reward{
-    background:#1f2937;
-    padding:20px;
-    margin:20px auto;
-    max-width:600px;
-    border-radius:15px;
-}
-
-.quiz-option{
-    display:block;
-    margin:10px auto;
-    width:250px;
-}
-
-img{
-    max-width:90%;
-    border-radius:15px;
-    margin-top:20px;
-}
+body{margin:0;background:linear-gradient(180deg,#07152e,#0b2447);color:#fff;font-family:Trebuchet MS,sans-serif;text-align:center}
+.screen{display:none;min-height:100vh;padding:30px}
+.active{display:block}
+h1,h2{color:#ffd700}
+button{background:#ffd700;border:none;padding:14px 24px;border-radius:12px;font-weight:bold;cursor:pointer}
+.reward{background:#1f355c;max-width:700px;margin:20px auto;padding:20px;border-radius:16px}
+.progress{width:80%;margin:20px auto;background:#1f355c;border-radius:20px;overflow:hidden}
+.progress-bar{height:24px;width:0;background:#ffd700;transition:1s}
+.quiz-option{display:block;margin:10px auto;width:260px}
+img{max-width:90%;border-radius:18px;margin-top:20px}
+.counter{color:#ffe082}
 </style>
-
 </head>
 <body>
 
 <div id="start" class="screen active">
-    <h1>🎮 WALTER'S ADVENTURE 🎮</h1>
-
-    <h2>Birthday & Valentine's Edition</h2>
-<div class="counter">
-❤️ Tempo de aventura:<br>
-2 anos, 1 mês e muitas partidas de Brawl Stars
-</div>
-
-<div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-</div>
-
+<h1>🎮 WALTER'S ADVENTURE 🎮</h1>
+<h2>Birthday & Valentine's Edition</h2>
+<div class="counter">❤️ Desde 01/05/2024</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <p id="nivelJogo">Nível atual do jogo: 0%</p>
-    
-    <p><strong>Player:</strong> Walter Wormes</p>
-    <p><strong>Level:</strong> 24</p>
-    <p><strong>Companion:</strong> Ana Marciano ❤️</p>
-
-    <p>Juntos há 2 anos e 1 mês.</p>
-
-    <p>
-    Objetivo:<br>
-    Completar todas as fases e desbloquear todas as recompensas.
-    </p>
-
-    <button onclick="next('fase1')">
-        START GAME
-    </button>
+<p><strong>Player:</strong> Walter Wormes</p>
+<p><strong>Level:</strong> 24</p>
+<button onclick="nextScreen('fase1')">START GAME</button>
 </div>
 
 <div id="fase1" class="screen">
-
-    <h1>🍫 FASE 1</h1>
-
-    <h2>Energia do Herói</h2>
-
-    <p>
-    Todo aventureiro precisa recuperar HP antes de iniciar sua jornada.
-    </p>
-
-    <button onclick="mostrarPremio1()">
-        Coletar Energia
-    </button>
-
-    <div id="premio1" style="display:none" class="reward">
-        <h2>🏆 RECOMPENSA DESBLOQUEADA</h2>
-        <h3>M&M'S</h3>
-
-        <p>
-        +20 HP<br>
-        +10 Felicidade<br>
-        +100 Energia Gamer
-        </p>
-
-        <button onclick="atualizarProgresso(25); next('fase2')">
-            Próxima Fase
-        </button>
-    </div>
-
+<h1>🏐 FASE 1</h1>
+<p>Onde nos conhecemos?</p>
+<button class="quiz-option" onclick="unlock('p1')">Partida de Vôlei</button>
+<button class="quiz-option" onclick="errado()">Shopping</button>
+<div id="p1" class="reward" style="display:none">
+<h2>🍫 M&M'S DESBLOQUEADO</h2>
+<button onclick="updateProgress(25);nextScreen('fase2')">Próxima fase</button>
+</div>
 </div>
 
 <div id="fase2" class="screen">
-
-    <h1>🎮 FASE 2</h1>
-
-    <h2>Quiz do Casal</h2>
-
-    <p>Onde nós nos conhecemos?</p>
-
-    <button class="quiz-option" onclick="errado()">
-        Escola
-    </button>
-
-    <button class="quiz-option" onclick="acertou()">
-        Partida de Vôlei
-    </button>
-
-    <button class="quiz-option" onclick="errado()">
-        Shopping
-    </button>
-
-    <button class="quiz-option" onclick="errado()">
-        Faculdade
-    </button>
-
-    <div id="quizAcerto" style="display:none" class="reward">
-
-        <h2>🏆 RECOMPENSA DESBLOQUEADA</h2>
-
-        <h3>VALE PLAYSTATION 🎮</h3>
-
-        <p>
-        Você provou ser um verdadeiro gamer.
-        </p>
-
-        <button onclick="atualizarProgresso(50); next('fase3')">
-            Próxima Fase
-        </button>
-
-    </div>
-
+<h1>❤️ FASE 2</h1>
+<p>Quem falou “eu te amo” primeiro?</p>
+<button class="quiz-option" onclick="unlock('p2')">Walter ❤️</button>
+<button class="quiz-option" onclick="errado()">Ana</button>
+<div id="p2" class="reward" style="display:none">
+<h2>📖 ÁLBUM DA COPA DOS NAMORADOS</h2>
+<button onclick="updateProgress(50);nextScreen('fase3')">Próxima fase</button>
+</div>
 </div>
 
 <div id="fase3" class="screen">
-
-    <h1>❤️ FASE 3</h1>
-
-    <h2>Memórias Desbloqueadas</h2>
-
-    <p>
-    Quem falou "eu te amo" primeiro?
-    </p>
-
-    <button class="quiz-option" onclick="acerto3()">
-        Walter ❤️
-    </button>
-
-    <button class="quiz-option" onclick="errado()">
-        Ana
-    </button>
-
-    <div id="premio3" style="display:none" class="reward">
-
-        <h2>🏆 RECOMPENSA DESBLOQUEADA</h2>
-
-        <h3>ÁLBUM DA COPA DOS NAMORADOS 📖</h3>
-
-        <p>
-        Alguns colecionam Pokémon.<br>
-        Eu prefiro colecionar momentos com você.
-        </p>
-
-        <button onclick="atualizarProgresso(75); next('fase4')">
-            Próxima Fase
-        </button>
-
-    </div>
-
+<h1>🚗 FASE 3</h1>
+<p>Qual foi nossa primeira viagem?</p>
+<button class="quiz-option" onclick="unlock('p3')">Pontal do Sul</button>
+<button class="quiz-option" onclick="errado()">Balneário Camboriú</button>
+<div id="p3" class="reward" style="display:none">
+<h2>🚗 PRODUTOS PARA O CARRO</h2>
+<button onclick="updateProgress(75);nextScreen('fase4')">Próxima fase</button>
+</div>
 </div>
 
 <div id="fase4" class="screen">
-
-    <h1>🚗 FASE 4</h1>
-
-    <h2>Mestre das Estradas</h2>
-
-    <p>
-    Qual foi nossa primeira viagem?
-    </p>
-
-    <button class="quiz-option" onclick="errado()">
-        Balneário Camboriú
-    </button>
-
-    <button class="quiz-option" onclick="acerto4()">
-        Pontal do Sul
-    </button>
-
-    <button class="quiz-option" onclick="errado()">
-        Curitiba
-    </button>
-
-    <div id="premio4" style="display:none" class="reward">
-
-        <h2>🏆 RECOMPENSA DESBLOQUEADA</h2>
-
-        <h3>PRODUTOS PARA O CARRO 🚗</h3>
-
-        <p>
-        Todo piloto precisa preparar seu veículo para as próximas aventuras.
-        </p>
-
-        <button onclick="atualizarProgresso(100); next('balneario')">
-            Enfrentar Chefe Final
-        </button>
-
-    </div>
-
+<h1>🎮 FASE 4</h1>
+<p>Qual jogo jogamos muito juntos?</p>
+<button class="quiz-option" onclick="unlock('p4')">Brawl Stars</button>
+<button class="quiz-option" onclick="errado()">Fortnite</button>
+<div id="p4" class="reward" style="display:none">
+<h2>🎮 VALE PLAYSTATION</h2>
+<button onclick="updateProgress(100);nextScreen('balneario')">Continuar</button>
 </div>
+</div>
+
 <div id="balneario" class="screen">
-
-<h1>🌊 NOVA MISSÃO DESBLOQUEADA 🌊</h1>
-
+<h1>🌊 MISSÃO DESBLOQUEADA</h1>
 <h2>Operação Balneário Camboriú</h2>
-
-<div class="reward">
-
-<p>
-Parabéns jogador!
-</p>
-
-<p>
-Você completou todas as missões principais.
-</p>
-
-<p>
-Sua próxima aventura começa amanhã.
-</p>
-
-<p>
-Objetivo:
-Completar o Passaporte de Aventuras do Aquário.
-</p>
-
-<p>
-Recompensa:
-Momentos inesquecíveis ❤️
-</p>
-
-<button onclick="next('final')">
-Iniciar Próxima Aventura
-</button>
-
+<p>Sua próxima aventura começa amanhã.</p>
+<button onclick="nextScreen('final')">Iniciar Próxima Aventura</button>
 </div>
 
-</div>
 <div id="final" class="screen">
-
-    <h1>🎂 CHEFE FINAL DERROTADO 🎂</h1>
-
-    <h2>LEVEL 24 ALCANÇADO</h2>
-
-    <div class="reward">
-
-        <h2>🏆 RECOMPENSA FINAL</h2>
-
-        <h3>BOLINHO 🎂</h3>
-
-        <p>
-        Feliz aniversário, Walter!
-        </p>
-
-    </div>
-
-    <h2>❤️ Achievement Unlocked ❤️</h2>
-
-    <h3>Player 2 da Minha Vida</h3>
-
-    <p>
-    Obrigada por todos os momentos,
-    pelas viagens,
-    pelas risadas,
-    pelos jogos,
-    pelos Brawl Stars,
-    e por dividir a vida comigo.
-    </p>
-
-    <p>
-    Feliz Dia dos Namorados ❤️
-    <br><br>
-    Feliz aniversário 🎂
-    </p>
-
-    <p>
-    Que venham muitas aventuras,
-    muitos Pokémons capturados,
-    muitas viagens
-    e muitos anos juntos.
-    </p>
-
-    <img src="foto.jpg" alt="Nós dois">
-
-    <h2>
-        Te amo ❤️
-    </h2>
-
-    <p>
-        — Ana
-    </p>
-
+<h1>🎂 LEVEL 24 COMPLETO 🎂</h1>
+<div class="reward">
+<p>Feliz Dia dos Namorados e Feliz Aniversário, meu amor.</p>
+<p>Obrigada por todas as aventuras, pelas conversas que parecem não ter fim, pelas viagens, pelos jogos, pelas risadas e por todos os momentos que construímos juntos desde aquela partida de vôlei que mudou a minha vida.</p>
+<p>Você se tornou meu parceiro favorito para tudo.</p>
+<p>Que o Level 24 seja cheio de conquistas, felicidade, viagens, sonhos realizados, muitos Pokémons capturados, vitórias no Brawl Stars e momentos inesquecíveis ao meu lado.</p>
+<p>E que essa seja apenas uma das muitas fases que ainda vamos completar juntos.</p>
+<p>Eu amo a nossa história, amo as nossas memórias e, principalmente, amo você.</p>
+<p>Te amo. ❤️</p>
+<p>— Ana</p>
+</div>
+<p>📸 Coloque sua foto no repositório com o nome foto.jpg</p>
+<img src="foto.jpg" alt="Nós dois">
 </div>
 
 <script>
-
-function next(id){
-
-    document.querySelectorAll('.screen').forEach(t=>{
-        t.classList.remove('active');
-    });
-
-    document.getElementById(id).classList.add('active');
+function nextScreen(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
-
-function mostrarPremio1(){
-    document.getElementById('premio1').style.display='block';
-}
-
-function acertou(){
-    document.getElementById('quizAcerto').style.display='block';
-}
-
-function acerto3(){
-    document.getElementById('premio3').style.display='block';
-}
-
-function acerto4(){
-    document.getElementById('premio4').style.display='block';
-}
-
-function errado(){
-    alert("Ops! Tente novamente 😜");
-}
-let progresso = 0;
-
-function atualizarProgresso(valor){
-    progresso = valor;
-
-    const barra = document.getElementById("progressBar");
-    const texto = document.getElementById("nivelJogo");
-
-    if(barra){
-        barra.style.width = valor + "%";
-    }
-
-    if(texto){
-        texto.innerHTML = "Nível atual do jogo: " + valor + "%";
-    }
+function unlock(id){document.getElementById(id).style.display='block';}
+function errado(){alert('Ops! Tente novamente 😜');}
+function updateProgress(v){
+document.getElementById('progressBar').style.width=v+'%';
+document.getElementById('nivelJogo').innerText='Nível atual do jogo: '+v+'%';
 }
 </script>
-
 </body>
 </html>
