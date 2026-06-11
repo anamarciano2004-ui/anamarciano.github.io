@@ -36,6 +36,8 @@
         width: 100%;
         box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         box-sizing: border-box;
+        position: relative;
+        z-index: 10;
     }
     h1 { color: #f59e0b; text-shadow: 2px 2px #000; font-size: 21px; margin: 5px 0; }
     h2 { color: #38bdf8; font-size: 16px; margin-top: 0; }
@@ -107,7 +109,7 @@
 <!-- FASE 1: VÔLEI -->
 <div id="fase1" class="screen">
     <div class="console-box">
-        <h1> WORLD 1-1</h1>
+        <h1>🏐 WORLD 1-1</h1>
         <h2>O Início de Tudo</h2>
         <div id="q1-box">
             <p><strong>PERGUNTA:</strong> Onde nossa aventura e história começou?</p>
@@ -228,7 +230,7 @@
             <button class="quiz-btn" onclick="wrong()">Fortnite</button>
             <button class="quiz-btn" onclick="wrong()">Mario Kart</button>
             <button class="quiz-btn" onclick="correctQuiz('q5-box', 'g5-box')">Brawl Stars </button>
-             <button class="quiz-btn" onclick="wrong()">The Sims</button>
+            <button class="quiz-btn" onclick="wrong()">The Sims</button>
         </div>
         <div id="g5-box" style="display:none;">
             <p>✨ Perfeito! Agora sobreviva por 15 segundos desviando dos obstáculos do Brawl Runner!</p>
@@ -430,8 +432,8 @@
         if (typeof confetti === 'function') {
             var duration = 5 * 1000; var end = Date.now() + duration;
             (function frame() {
-                confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0 } });
-                confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1 } });
+                confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0 }, zIndex: -1 });
+                confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1 }, zIndex: -1 });
                 if (Date.now() < end) { requestAnimationFrame(frame); }
             }());
         }
