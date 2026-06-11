@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walter's Adventure - Level 24</title>
+<title>Walter's Adventure - Hardcore Edition</title>
 <style>
     body {
         margin: 0;
@@ -31,21 +31,21 @@
         background: #1e293b;
         border: 4px solid #38bdf8;
         border-radius: 20px;
-        padding: 30px 20px;
+        padding: 25px 15px;
         max-width: 500px;
         width: 100%;
         box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         box-sizing: border-box;
     }
-    h1 { color: #f59e0b; text-shadow: 2px 2px #000; font-size: 24px; margin-bottom: 5px; }
-    h2 { color: #38bdf8; font-size: 18px; margin-top: 0; }
-    p { font-size: 14px; line-height: 1.5; }
+    h1 { color: #f59e0b; text-shadow: 2px 2px #000; font-size: 22px; margin: 5px 0; }
+    h2 { color: #38bdf8; font-size: 16px; margin-top: 0; }
+    p { font-size: 13px; line-height: 1.5; margin: 10px 0; }
     button {
         background: #ef4444;
         color: white;
         border: 3px solid #b91c1c;
         padding: 12px 20px;
-        font-size: 16px;
+        font-size: 15px;
         font-family: 'Courier New', sans-serif;
         font-weight: bold;
         border-radius: 8px;
@@ -59,22 +59,30 @@
         box-shadow: 0 0 #991b1b;
         transform: translateY(4px);
     }
-    .quiz-btn { background: #10b981; border-color: #047857; box-shadow: 0 4px #065f46; margin: 8px auto; display: block; }
-    .quiz-btn:active { box-shadow: 0 0 #065f46; }
     .reward-box {
         background: #0f172a;
         border: 3px dashed #f59e0b;
         padding: 15px;
-        margin-top: 20px;
+        margin-top: 15px;
         border-radius: 10px;
         animation: pulse 1.5s infinite;
     }
-    .progress-container { width: 100%; background: #334155; border-radius: 10px; margin: 15px 0; height: 20px; overflow: hidden; border: 2px solid #fff; }
+    .progress-container { width: 100%; background: #334155; border-radius: 10px; margin: 10px 0; height: 18px; overflow: hidden; border: 2px solid #fff; }
     .progress-bar { height: 100%; width: 0%; background: #10b981; transition: width 0.5s ease; }
     .stat { color: #38bdf8; font-weight: bold; }
-    img { max-width: 100%; border-radius: 10px; border: 4px solid #fff; margin-top: 15px; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-    #canvas-dino { background: #334155; border: 2px solid #fff; border-radius: 10px; display: block; margin: 15px auto; }
-    #timer { font-size: 13px; color: #a7f3d0; margin: 10px 0; background: #0f172a; padding: 8px; border-radius: 5px; line-height: 1.4; }
+    img { max-width: 100%; border-radius: 10px; border: 4px solid #fff; margin-top: 15px; }
+    
+    /* Área dos Games */
+    canvas { background: #334155; border: 2px solid #fff; border-radius: 10px; display: block; margin: 10px auto; max-width: 100%; }
+    .mobile-controls { display: flex; justify-content: space-between; width: 100%; max-width: 300px; margin: 5px auto; }
+    .ctrl-btn { background: #38bdf8; border-color: #0284c7; box-shadow: 0 4px #0369a1; width: 45%; margin: 0; }
+    
+    /* Grid do Jogo da Memória */
+    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 320px; margin: 15px auto; }
+    .card { height: 70px; background: #334155; border: 2px solid #fff; border-radius: 8px; font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; user-select: none; }
+    .card.flipped { background: #10b981; }
+
+    #timer { font-size: 12px; color: #a7f3d0; margin: 8px 0; background: #0f172a; padding: 6px; border-radius: 5px; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -84,86 +92,103 @@
 <!-- TELA INICIAL -->
 <div id="start" class="screen active">
     <div class="console-box">
-        <h1>🎮 WALTER'S ADVENTURE </h1>
+        <h1>🎮 WALTER'S ADVENTURE</h1>
         <h2>Birthday & Valentine's Edition</h2>
         <div id="timer">Calculando tempo de jogo...</div>
-        <div class="progress-container"><div class="progress-bar" id="p-start" style="width: 5%;"></div></div>
+        <div class="progress-container"><div class="progress-bar" style="width: 5%;"></div></div>
         <p><strong>PLAYER 1:</strong> Walter Wormes<br><strong>LEVEL:</strong> 24 | <strong>COMPANION:</strong> Ana ❤️</p>
-        <button onclick="go('fase1', 20)">PRESS START</button>
+        <p style="color: #f59e0b; font-size: 11px;">⚠️ MODO HARDCORE ATIVADO: VENÇA OS MINIGAMES PARA REIVINDICAR OS PRESENTES!</p>
+        <button onclick="startFase1()">PRESS START</button>
     </div>
 </div>
 
-<!-- FASE 1: VÔLEI -->
+<!-- FASE 1: VÔLEI CATCH -->
 <div id="fase1" class="screen">
     <div class="console-box">
-        <h1>🏐 WORLD 1-1</h1>
-        <h2>O Início da Jornada</h2>
-        <p>Para começar a coletar seus itens, responda com sabedoria: Onde nossa aventura começou?</p>
-        <button class="quiz-btn" onclick="wrong()">Na Faculdade</button>
-        <button class="quiz-btn" onclick="wrong()">No Shopping</button>
-        <button class="quiz-btn" onclick="winReward('r1')">Numa Partida de Vôlei</button>
-        <button class="quiz-btn" onclick="wrong()">No Instagram</button>
-        
+        <h1>🏐 WORLD 1-1: VOLLEY CATCH</h1>
+        <p>Use as setas (computador) ou os botões abaixo para mover o receptor azul e pegar 5 bolas de vôlei!</p>
+        <p class="stat" id="v-score">Bolas coletadas: 0/5</p>
+        <canvas id="canvas-volley" width="300" height="200"></canvas>
+        <div class="mobile-controls">
+            <button class="ctrl-btn" id="v-left">◀ ESQUERDA</button>
+            <button class="ctrl-btn" id="v-right">DIREITA ▶</button>
+        </div>
         <div id="r1" class="reward-box" style="display:none;">
-            <h3>🎁 ITEM DESBLOQUEADO!</h3>
-            <p class="stat">Abra o PRESENTE #1 na sua caixa física!</p>
-            <p><strong>[ 🍫 M&M's Coletado! ]</strong><br>+20 HP | +100 Energia Gamer</p>
-            <button onclick="go('fase2', 40)">Avançar para Fase 2</button>
+            <h3>🎁 RECOMPENSA LIBERADA!</h3>
+            <p class="stat">Abra o PRESENTE #1 na sua caixa!</p>
+            <p><strong>[ 🍫 M&M's Encontrado! ]</strong></p>
+            <button onclick="startFase2()">Ir para Fase 2</button>
         </div>
     </div>
 </div>
 
-<!-- FASE 2: EU TE AMO -->
+<!-- FASE 2: JOGO DA MEMÓRIA -->
 <div id="fase2" class="screen">
     <div class="console-box">
-        <h1>❤️ WORLD 1-2</h1>
-        <h2>Desbloqueando Sentimentos</h2>
-        <p>Quem teve a coragem de falar o primeiro "Eu te amo" da nossa história?</p>
-        <button class="quiz-btn" onclick="winReward('r2')">Walter (O romântico) ❤️</button>
-        <button class="quiz-btn" onclick="wrong()">Ana (Estava tímida)</button>
-        
+        <h1>❤️ WORLD 1-2: MEMORY PUZZLE</h1>
+        <p>Encontre os pares românticos e gamers para desbloquear a próxima etapa!</p>
+        <div class="memory-grid" id="memory-board"></div>
         <div id="r2" class="reward-box" style="display:none;">
-            <h3>🎁 ITEM LENDÁRIO DESBLOQUEADO!</h3>
-            <p class="stat">Abra o PRESENTE #2 na sua caixa física!</p>
-            <p><strong>[ 📖 Álbum Copa dos Namorados ]</strong><br>"Alguns colecionam Pokémon. Eu prefiro colecionar momentos com você."</p>
-            <button onclick="go('fase3', 60)">Avançar para Fase 3</button>
+            <h3>🎁 RECOMPENSA LENDÁRIA!</h3>
+            <p class="stat">Abra o PRESENTE #2 na sua caixa!</p>
+            <p><strong>[ 📖 Álbum Copa dos Namorados ]</strong><br>"Eu prefiro colecionar momentos com você."</p>
+            <button onclick="startFase3()">Ir para Fase 3</button>
         </div>
     </div>
 </div>
 
-<!-- FASE 3: VIAGEM PONTAL -->
+<!-- FASE 3: RETRO ROAD-TRIP -->
 <div id="fase3" class="screen">
     <div class="console-box">
-        <h1>🚗 WORLD 1-3</h1>
-        <h2>Mestre das Estradas</h2>
-        <p>Para onde foi a nossa primeiríssima viagem juntos?</p>
-        <button class="quiz-btn" onclick="wrong()">Balneário Camboriú</button>
-        <button class="quiz-btn" onclick="winReward('r3')">Pontal do Sul 🌊</button>
-        <button class="quiz-btn" onclick="wrong()">Guaratuba</button>
-        
+        <h1>🚗 WORLD 1-3: PONTAL ROAD</h1>
+        <p>Controle o carrinho vermelho e desvie dos cones amarelos por 15 segundos na estrada de Pontal do Sul!</p>
+        <p class="stat" id="road-timer">Tempo restante: 15s</p>
+        <canvas id="canvas-road" width="300" height="200"></canvas>
+        <div class="mobile-controls">
+            <button class="ctrl-btn" id="r-left">◀ ESQUERDA</button>
+            <button class="ctrl-btn" id="r-right">DIREITA ▶</button>
+        </div>
         <div id="r3" class="reward-box" style="display:none;">
-            <h3>🎁 UPGRADE DE VEÍCULO!</h3>
-            <p class="stat">Abra o PRESENTE #3 na sua caixa física!</p>
-            <p><strong>[ 🚗 Produtos para o Carro ]</strong><br>"Todo piloto precisa preparar seu veículo para as próximas estradas."</p>
-            <button onclick="startDinoPhase()">Avançar para Fase 4</button>
+            <h3>🎁 MÁQUINA REFORMULADA!</h3>
+            <p class="stat">Abra o PRESENTE #3 na sua caixa!</p>
+            <p><strong>[ 🚗 Produtos para o Carro ]</strong></p>
+            <button onclick="startFase4()">Ir para Fase 4</button>
         </div>
     </div>
 </div>
 
-<!-- FASE 4: MINIGAME DINOSSAURO (MARIO RUNNER) -->
+<!-- FASE 4: CANDY CATCH (KIT KAT + AMENDOIM) -->
 <div id="fase4" class="screen">
     <div class="console-box">
-        <h1>🏃 WORLD 1-4</h1>
-        <h2>Brawl Stars Desafio Real</h2>
-        <p>Sobreviva por 15 segundos pulando os obstáculos para ganhar o prêmio supremo!</p>
-        <p class="stat" id="dino-timer">Tempo restante: 15s</p>
-        <canvas id="canvas-dino" width="300" height="120"></canvas>
-        <button id="btn-jump" onclick="jump()" style="background:#38bdf8; border-color:#0284c7; box-shadow:0 4px #0369a1; width:100%;">PULAR (OU ESPAÇO)</button>
-        
+        <h1>🥜 WORLD 1-4: CANDY TURBO</h1>
+        <p>Novos loots detectados! Pegue 8 petiscos caindo em alta velocidade!</p>
+        <p class="stat" id="c-score">Doces coletados: 0/8</p>
+        <canvas id="canvas-candy" width="300" height="200"></canvas>
+        <div class="mobile-controls">
+            <button class="ctrl-btn" id="c-left">◀ ESQUERDA</button>
+            <button class="ctrl-btn" id="c-right">DIREITA ▶</button>
+        </div>
         <div id="r4" class="reward-box" style="display:none;">
-            <h3>🏆 ULTRA LOOT DESBLOQUEADO!</h3>
+            <h3>🎁 COMBO DE SUPRIMENTOS DETECTADO!</h3>
             <p class="stat">Abra o PRESENTE #4 na sua caixa física!</p>
-            <p><strong>[ 🎮 Vale Playstation ]</strong><br>O melhor modo multiplayer continua sendo nós dois.</p>
+            <p><strong>[ 🍫 Kit Kat & Amendoins Coletados! ]</strong><br>+50 Estamina | +100 Sabor</p>
+            <button onclick="startFase5()">Ir para Fase Suprema</button>
+        </div>
+    </div>
+</div>
+
+<!-- FASE 5: DINO RUNNER -->
+<div id="fase5" class="screen">
+    <div class="console-box">
+        <h1>🏃 WORLD 1-5: SUPREME BOSS RUN</h1>
+        <p>O desafio final! Sobreviva por 25 segundos aos obstáculos acelerados do Brawl Stars!</p>
+        <p class="stat" id="dino-timer">Tempo restante: 25s</p>
+        <canvas id="canvas-dino" width="300" height="120"></canvas>
+        <button id="btn-jump" onclick="jump()" style="background:#ef4444; width:100%;">PULAR (OU ESPAÇO)</button>
+        <div id="r5" class="reward-box" style="display:none;">
+            <h3>🏆 VALE PLAYSTATION DESBLOQUEADO!</h3>
+            <p class="stat">Abra o PRESENTE #5 na sua caixa!</p>
+            <p>O melhor multiplayer continua sendo nós dois.</p>
             <button onclick="go('balneario', 90)">Ver Próxima Missão</button>
         </div>
     </div>
@@ -174,7 +199,7 @@
     <div class="console-box">
         <h1>🌊 MISSÃO EXTRA DESBLOQUEADA</h1>
         <h2>Operação Balneário Camboriú</h2>
-        <p>Parabéns, jogador! Você completou todas as missões principais. Mas uma nova área do mapa acaba de abrir...</p>
+        <p>Parabéns, Walter! Você superou o modo Hardcore. Mas o mapa acaba de expandir para o litoral...</p>
         <div class="reward-box" style="animation:none; text-align:left;">
             <p>📌 <strong>Objetivo:</strong> Explorar o Aquário</p>
             <p>📌 <strong>Item Obrigatório:</strong> Passaporte Aventuras</p>
@@ -184,35 +209,29 @@
     </div>
 </div>
 
-<!-- TELA FINAL: O CHEFE E AS ESTATÍSTICAS -->
+<!-- TELA FINAL -->
 <div id="final" class="screen">
     <div class="console-box" style="max-width: 600px;">
-        <h1>🎂 LEVEL 24 CONCLUÍDO 🎂</h1>
+        <h1>🎂 LEVEL 24 COMPLETO 🎂</h1>
         <h2>Walter Wormes - Player 1</h2>
-        
-        <div class="reward-box" style="animation:none; text-align:left; font-size:13px;">
+        <div class="reward-box" style="animation:none; text-align:left; font-size:12px;">
             <p>🏅 <strong>CONQUISTAS DO SAVE:</strong></p>
-            <p>✓ Conheceu a Ana no Vôlei<br>✓ Teve atitude e disse "te amo" primeiro<br>✓ Desbravou as praias de Pontal<br>✓ Mestre do Brawl Stars & Nintendo<br>✓ Motorista Oficial das nossas loucuras</p>
+            <p>✓ Conheceu a Ana no Vôlei<br>✓ Disse "te amo" primeiro<br>✓ Desbravou Pontal do Sul<br>✓ Mestre do Brawl Stars & Nintendo<br>✓ Dominou o Modo Hardcore de Aniversário</p>
         </div>
-
         <p><strong>Feliz Dia dos Namorados e Feliz Aniversário, meu amor! ❤️</strong></p>
-        <p style="font-size:13px; text-align:justify;">Obrigada por ser meu parceiro favorito de vida desde aquela partida de vôlei. Que o seu Level 24 seja incrível, cheio de vitórias, Pokémons raros, carros bem cuidados e muitas viagens do meu lado. Eu amo a nossa história e amo você! 🥰</p>
-        
+        <p style="font-size:12px; text-align:justify;">Obrigada por ser meu parceiro favorito de vida desde aquela partida de vôlei. Que o seu Level 24 seja incrível, cheio de vitórias, Pokémons raros, carros bem cuidados e muitas viagens do meu lado. Eu amo a nossa história e amo você! 🥰</p>
         <p class="stat">— Com amor, Ana (Seu Player 2) 👑</p>
-        
         <img src="foto.jpg" alt="Nós dois ❤️">
     </div>
 </div>
 
 <script>
-    // Configuração segura do Contador de Tempo Real (Ano, Mês, Dia)
+    // Contador Seguro de Tempo de Relacionamento
     function atualizarContador() {
-        const dataNamoro = new Date(2024, 4, 1); // 01 de Maio de 2024 (Mês no JS começa em 0)
+        const dataNamoro = new Date(2024, 4, 1);
         const agora = new Date();
         const diferenca = agora - dataNamoro;
-        
         if (isNaN(diferenca)) return;
-
         const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365.25));
         const diasTotais = Math.floor(diferenca / (1000 * 60 * 60 * 24));
         const meses = Math.floor((diasTotais % 365) / 30.43);
@@ -220,115 +239,128 @@
         const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
         const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
-
-        const timerEl = document.getElementById("timer");
-        if (timerEl) {
-            timerEl.innerHTML = `❤️ TEMPO DE AVENTURA:<br>${anos} anos, ${meses} meses, ${dias} dias,<br>${horas}h ${minutos}m ${segundos}s`;
-        }
+        const t = document.getElementById("timer");
+        if (t) t.innerHTML = `❤️ AVENTURA JUNTOS:<br>${anos} anos, ${meses} meses, ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
     }
-    
-    // Inicializa o contador imediatamente e define o intervalo
-    atualizarContador();
-    setInterval(atualizarContador, 1000);
+    atualizarContador(); setInterval(atualizarContador, 1000);
 
-    // Sistema de Navegação entre telas
-    function go(screenId, pct) {
+    function go(id, pct) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        const nextScreen = document.getElementById(screenId);
-        if (nextScreen) {
-            nextScreen.classList.add('active');
-            // Enche a barra de progresso de todas as telas correspondentes
-            document.querySelectorAll('.progress-bar').forEach(b => b.style.width = pct + '%');
-        }
+        const n = document.getElementById(id);
+        if (n) { n.classList.add('active'); document.querySelectorAll('.progress-bar').forEach(b => b.style.width = pct + '%'); }
     }
 
-    function winReward(id) { 
-        const reward = document.getElementById(id);
-        if (reward) reward.style.display = 'block'; 
-    }
-    
-    function wrong() { 
-        alert("Errou feio, errou rude! Tenta de novo 😜"); 
-    }
+    let activeIntervals = [];
+    function clearGames() { activeIntervals.forEach(clearInterval); activeIntervals = []; }
 
-    // MECÂNICA DO MINIGAME DINOSSAURO (MARIO RUNNER)
-    const canvas = document.getElementById('canvas-dino');
-    let ctx = canvas ? canvas.getContext('2d') : null;
-    let dinoY = 90, dinoVy = 0, isJumping = false;
-    let obstacleX = 320, obstacleSpeed = 4, score = 15;
-    let gameInterval, timerInterval, gameRunning = false;
-
-    function startDinoPhase() {
-        go('fase4', 75);
-        if (!gameRunning) {
-            gameRunning = true;
-            score = 15;
-            obstacleX = 320;
-            dinoY = 90;
-            gameInterval = setInterval(updateGame, 20);
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-    }
-
-    function jump() {
-        if (!isJumping && gameRunning) { dinoVy = -8; isJumping = true; }
-    }
-    window.addEventListener('keydown', (e) => { if (e.code === 'Space') jump(); });
-
-    function updateTimer() {
-        score--;
-        const dinoTimerEl = document.getElementById('dino-timer');
-        if (dinoTimerEl) dinoTimerEl.innerText = `Tempo restante: ${score}s`;
+    // === GAME 1: VOLLEY CATCH ===
+    let vX = 130, vScore = 0, bX = 150, bY = 0;
+    function startFase1() {
+        go('fase1', 20); vScore = 0; bY = 0;
+        let c = document.getElementById('canvas-volley'); let ctx = c.getContext('2d');
+        let keys = {}; window.onkeydown = (e) => keys[e.code] = true; window.onkeyup = (e) => keys[e.code] = false;
+        document.getElementById('v-left').ontouchstart = () => keys['KeyA'] = true; document.getElementById('v-left').ontouchend = () => keys['KeyA'] = false;
+        document.getElementById('v-right').ontouchstart = () => keys['KeyD'] = true; document.getElementById('v-right').ontouchend = () => keys['KeyD'] = false;
         
-        if (score <= 0) {
-            clearInterval(gameInterval);
-            clearInterval(timerInterval);
-            gameRunning = false;
-            const r4 = document.getElementById('r4');
-            const btnJump = document.getElementById('btn-jump');
-            if (r4) r4.style.display = 'block';
-            if (btnJump) btnJump.style.display = 'none';
-        }
+        let loop = setInterval(() => {
+            ctx.clearRect(0,0,300,200);
+            if(keys['ArrowLeft'] || keys['KeyA']) vX = Math.max(0, vX - 5);
+            if(keys['ArrowRight'] || keys['KeyD']) vX = Math.min(240, vX + 5);
+            bY += 3; if(bY > 200) { bY = 0; bX = Math.random() * 280; }
+            if(bY >= 180 && bX > vX && bX < vX + 60) { vScore++; bY = 0; bX = Math.random() * 280; document.getElementById('v-score').innerText = `Bolas coletadas: ${vScore}/5`; }
+            ctx.fillStyle = '#38bdf8'; ctx.fillRect(vX, 185, 60, 15); // Coletor
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(bX, bY, 8, 0, Math.PI*2); ctx.fill(); // Bola
+            if(vScore >= 5) { clearGames(); document.getElementById('r1').style.display = 'block'; }
+        }, 20); activeIntervals.push(loop);
     }
 
-    function updateGame() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // === GAME 2: JOGO DA MEMÓRIA ===
+    function startFase2() {
+        go('fase2', 40); const icons = ['🏐','🏐','❤️','❤️','🚗','🚗','🎮','🎮'];
+        icons.sort(() => Math.random() - 0.5); const board = document.getElementById('memory-board'); board.innerHTML = '';
+        let flipped = [], matches = 0;
+        icons.forEach((icon, i) => {
+            let card = document.createElement('div'); card.className = 'card'; card.dataset.icon = icon; card.dataset.id = i; card.innerText = '?';
+            card.onclick = () => {
+                if(flipped.length < 2 && !card.classList.contains('flipped')) {
+                    card.classList.add('flipped'); card.innerText = icon; flipped.push(card);
+                    if(flipped.length === 2) {
+                        if(flipped[0].dataset.icon === flipped[1].dataset.icon) { matches++; flipped = []; if(matches === 4) document.getElementById('r2').style.display = 'block'; }
+                        else { setTimeout(() => { flipped.forEach(c => { c.classList.remove('flipped'); c.innerText = '?'; }); flipped = []; }, 800); }
+                    }
+                }
+            }; board.appendChild(card);
+        });
+    }
+
+    // === GAME 3: RETRO ROAD-TRIP ===
+    let carX = 135, rTime = 15, coneX = 150, coneY = 0;
+    function startFase3() {
+        go('fase3', 60); rTime = 15; coneY = 0;
+        let c = document.getElementById('canvas-road'); let ctx = c.getContext('2d');
+        let keys = {}; window.onkeydown = (e) => keys[e.code] = true; window.onkeyup = (e) => keys[e.code] = false;
+        document.getElementById('r-left').ontouchstart = () => keys['KeyA'] = true; document.getElementById('r-left').ontouchend = () => keys['KeyA'] = false;
+        document.getElementById('r-right').ontouchstart = () => keys['KeyD'] = true; document.getElementById('r-right').ontouchend = () => keys['KeyD'] = false;
         
-        // Gravidade e Pulo
-        dinoY += dinoVy;
-        if (dinoY < 90) dinoVy += 0.5;
-        else { dinoY = 90; dinoVy = 0; isJumping = false; }
-
-        // Desenha Jogador (Quadradinho Vermelho estilo Mario Retro)
-        ctx.fillStyle = '#ef4444';
-        ctx.fillRect(30, dinoY, 20, 20);
-
-        // Mover Obstáculo (Casco/Cone)
-        obstacleX -= obstacleSpeed;
-        if (obstacleX < -15) obstacleX = 320 + Math.random() * 50;
-
-        // Desenha Obstáculo
-        ctx.fillStyle = '#f59e0b';
-        ctx.fillRect(obstacleX, 95, 15, 15);
-
-        // Colisão simples
-        if (obstacleX > 30 && obstacleX < 50 && dinoY >= 75) {
-            alert("💥 Você bateu no obstáculo! O jogo reiniciou a fase!");
-            obstacleX = 320;
-            score = 15;
-        }
+        let tLoop = setInterval(() => { rTime--; document.getElementById('road-timer').innerText = `Tempo restante: ${rTime}s`; if(rTime <= 0) { clearGames(); document.getElementById('r3').style.display = 'block'; } }, 1000);
+        let gLoop = setInterval(() => {
+            ctx.clearRect(0,0,300,200);
+            if(keys['ArrowLeft'] || keys['KeyA']) carX = Math.max(10, carX - 5);
+            if(keys['ArrowRight'] || keys['KeyD']) carX = Math.min(260, carX + 5);
+            coneY += 4; if(coneY > 200) { coneY = 0; coneX = 30 + Math.random() * 220; }
+            if(coneY >= 170 && coneY <= 195 && coneX > carX && coneX < carX + 30) { alert("💥 Bateu no cone! Pista reiniciada!"); coneY = 0; rTime = 15; }
+            ctx.fillStyle = '#ef4444'; ctx.fillRect(carX, 170, 30, 25); // Carro
+            ctx.fillStyle = '#f59e0b'; ctx.fillRect(coneX, coneY, 15, 15); // Cone
+        }, 20); activeIntervals.push(tLoop, gLoop);
     }
+
+    // === GAME 4: CANDY CATCH (KIT KAT + AMENDOIM) ===
+    let padX = 130, cScore = 0, cdX = 150, cdY = 0;
+    function startFase4() {
+        go('fase4', 70); cScore = 0; cdY = 0;
+        let c = document.getElementById('canvas-candy'); let ctx = c.getContext('2d');
+        let keys = {}; window.onkeydown = (e) => keys[e.code] = true; window.onkeyup = (e) => keys[e.code] = false;
+        document.getElementById('c-left').ontouchstart = () => keys['KeyA'] = true; document.getElementById('c-left').ontouchend = () => keys['KeyA'] = false;
+        document.getElementById('c-right').ontouchstart = () => keys['KeyD'] = true; document.getElementById('c-right').ontouchend = () => keys['KeyD'] = false;
+
+        let loop = setInterval(() => {
+            ctx.clearRect(0,0,300,200);
+            if(keys['ArrowLeft'] || keys['KeyA']) padX = Math.max(0, padX - 6);
+            if(keys['ArrowRight'] || keys['KeyD']) padX = Math.min(240, padX + 6);
+            cdY += 5; if(cdY > 200) { cdY = 0; cdX = Math.random() * 280; }
+            if(cdY >= 180 && cdX > padX && cdX < padX + 60) { cScore++; cdY = 0; cdX = Math.random() * 280; document.getElementById('c-score').innerText = `Doces coletados: ${cScore}/8`; }
+            ctx.fillStyle = '#eab308'; ctx.fillRect(padX, 185, 60, 15); // Coletor Amarelo
+            ctx.fillStyle = '#ef4444'; ctx.font = "16px Arial"; ctx.fillText("🍫", cdX, cdY); // Chocolate caindo
+            if(cScore >= 8) { clearGames(); document.getElementById('r4').style.display = 'block'; }
+        }, 20); activeIntervals.push(loop);
+    }
+
+    // === GAME 5: DINO RUNNER ===
+    let dY = 90, dVy = 0, dJump = false, oX = 320, oSpd = 5, dTime = 25;
+    function startFase5() {
+        go('fase5', 80); dTime = 25; oX = 320; oSpd = 5; dY = 90; dVy = 0;
+        let c = document.getElementById('canvas-dino'); let ctx = c.getContext('2d');
+        window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
+        
+        let tLoop = setInterval(() => { dTime--; document.getElementById('dino-timer').innerText = `Tempo restante: ${dTime}s`; if(dTime <= 0) { clearGames(); document.getElementById('r5').style.display = 'block'; document.getElementById('btn-jump').style.display = 'none'; } }, 1000);
+        let gLoop = setInterval(() => {
+            ctx.clearRect(0,0,300,120); oSpd += 0.01; // Aceleração progressiva
+            dY += dVy; if(dY < 90) dVy += 0.5; else { dY = 90; dVy = 0; dJump = false; }
+            ctx.fillStyle = '#ef4444'; ctx.fillRect(30, dY, 20, 20); // Player
+            oX -= oSpd; if(oX < -15) oX = 320 + Math.random()*40;
+            ctx.fillStyle = '#38bdf8'; ctx.fillRect(oX, 95, 15, 15); // Obstáculo Brawl
+            if(oX > 25 && oX < 50 && dY >= 75) { alert("💥 Dano Crítico! Fase reiniciada!"); oX = 320; dTime = 25; oSpd = 5; }
+        }, 20); activeIntervals.push(tLoop, gLoop);
+    }
+    function jump() { if(!dJump) { dVy = -8; dJump = true; } }
 
     function endGame() {
         go('final', 100);
-        // Explosão de confetes ao chegar na carta final
         if (typeof confetti === 'function') {
-            var duration = 4 * 1000;
-            var end = Date.now() + duration;
+            var duration = 5 * 1000; var end = Date.now() + duration;
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0 } });
+                confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1 } });
                 if (Date.now() < end) { requestAnimationFrame(frame); }
             }());
         }
