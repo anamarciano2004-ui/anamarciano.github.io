@@ -7,11 +7,91 @@
 
 <style>
 body{
-    margin:0;
-    background:#111827;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
+margin:0;
+background:linear-gradient(180deg,#07152e,#0b2447);
+color:white;
+font-family:'Trebuchet MS',sans-serif;
+text-align:center;
+overflow-x:hidden;
+}
+
+.screen{
+display:none;
+min-height:100vh;
+padding:40px 20px;
+box-sizing:border-box;
+}
+
+.active{
+display:block;
+}
+
+.game-card{
+max-width:800px;
+margin:auto;
+background:#13284a;
+border:4px solid #ffd700;
+border-radius:25px;
+padding:30px;
+box-shadow:0 0 25px rgba(255,215,0,.3);
+}
+
+h1{
+color:#ffd700;
+text-shadow:0 0 10px rgba(255,215,0,.5);
+}
+
+button{
+background:#ffd700;
+border:none;
+padding:15px 25px;
+font-size:18px;
+border-radius:12px;
+cursor:pointer;
+margin-top:20px;
+transition:.2s;
+font-weight:bold;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.reward{
+background:#1f355c;
+padding:20px;
+margin:20px auto;
+max-width:600px;
+border-radius:15px;
+}
+
+.progress{
+width:80%;
+margin:20px auto;
+background:#1f355c;
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:25px;
+width:0%;
+background:#ffd700;
+transition:1s;
+}
+
+.achievement{
+background:#224e24;
+border:2px solid #90ee90;
+padding:15px;
+margin-top:20px;
+border-radius:15px;
+}
+
+.counter{
+font-size:20px;
+margin:20px 0;
+color:#ffe082;
 }
 
 .screen{
@@ -71,7 +151,17 @@ img{
     <h1>🎮 WALTER'S ADVENTURE 🎮</h1>
 
     <h2>Birthday & Valentine's Edition</h2>
+<div class="counter">
+❤️ Tempo de aventura:<br>
+2 anos, 1 mês e muitas partidas de Brawl Stars
+</div>
 
+<div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<p id="nivelJogo">Nível atual do jogo: 0%</p>
+    
     <p><strong>Player:</strong> Walter Wormes</p>
     <p><strong>Level:</strong> 24</p>
     <p><strong>Companion:</strong> Ana Marciano ❤️</p>
@@ -112,7 +202,7 @@ img{
         +100 Energia Gamer
         </p>
 
-        <button onclick="next('fase2')">
+        <button onclick="atualizarProgresso(25); next('fase2')">
             Próxima Fase
         </button>
     </div>
@@ -153,7 +243,7 @@ img{
         Você provou ser um verdadeiro gamer.
         </p>
 
-        <button onclick="next('fase3')">
+        <button onclick="atualizarProgresso(50); next('fase3')">
             Próxima Fase
         </button>
 
@@ -190,7 +280,7 @@ img{
         Eu prefiro colecionar momentos com você.
         </p>
 
-        <button onclick="next('fase4')">
+        <button onclick="atualizarProgresso(75); next('fase4')">
             Próxima Fase
         </button>
 
@@ -230,14 +320,50 @@ img{
         Todo piloto precisa preparar seu veículo para as próximas aventuras.
         </p>
 
-        <button onclick="next('final')">
+        <button onclick="atualizarProgresso(100); next('balneario')">
             Enfrentar Chefe Final
         </button>
 
     </div>
 
 </div>
+<div id="balneario" class="screen">
 
+<h1>🌊 NOVA MISSÃO DESBLOQUEADA 🌊</h1>
+
+<h2>Operação Balneário Camboriú</h2>
+
+<div class="reward">
+
+<p>
+Parabéns jogador!
+</p>
+
+<p>
+Você completou todas as missões principais.
+</p>
+
+<p>
+Sua próxima aventura começa amanhã.
+</p>
+
+<p>
+Objetivo:
+Completar o Passaporte de Aventuras do Aquário.
+</p>
+
+<p>
+Recompensa:
+Momentos inesquecíveis ❤️
+</p>
+
+<button onclick="next('final')">
+Iniciar Próxima Aventura
+</button>
+
+</div>
+
+</div>
 <div id="final" class="screen">
 
     <h1>🎂 CHEFE FINAL DERROTADO 🎂</h1>
@@ -324,7 +450,22 @@ function acerto4(){
 function errado(){
     alert("Ops! Tente novamente 😜");
 }
+let progresso = 0;
 
+function atualizarProgresso(valor){
+    progresso = valor;
+
+    const barra = document.getElementById("progressBar");
+    const texto = document.getElementById("nivelJogo");
+
+    if(barra){
+        barra.style.width = valor + "%";
+    }
+
+    if(texto){
+        texto.innerHTML = "Nível atual do jogo: " + valor + "%";
+    }
+}
 </script>
 
 </body>
