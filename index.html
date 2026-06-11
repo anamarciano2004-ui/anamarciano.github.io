@@ -405,11 +405,11 @@
     }
 
     // === GAME 5: DINO RUNNER ===
-    let dY = 90, dVy = 0, dJump = false, oX = 320, oSpd = 5, dTime = 25;
+    let dY = 90, dVy = 0, dJump = false, oX = 320, oSpd = 5, dTime = 20;
     function setupDinoGame() {
         document.getElementById('btn-start-g5').style.display = 'none';
         document.getElementById('g5-playground').style.display = 'block';
-        dTime = 25; oX = 320; oSpd = 5; dY = 90; dVy = 0;
+        dTime = 20; oX = 320; oSpd = 5; dY = 90; dVy = 0;
         let c = document.getElementById('canvas-dino'); let ctx = c.getContext('2d');
         window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
         
@@ -420,7 +420,7 @@
             ctx.fillStyle = '#ef4444'; ctx.fillRect(30, dY, 20, 20);
             oX -= oSpd; if(oX < -15) oX = 320 + Math.random()*40;
             ctx.fillStyle = '#38bdf8'; ctx.fillRect(oX, 95, 15, 15);
-            if(oX > 25 && oX < 50 && dY >= 75) { alert("💥 Bateu! Tente focar no tempo!"); oX = 320; dTime = 25; oSpd = 5; dY = 90; }
+            if(oX > 25 && oX < 50 && dY >= 75) { alert("💥 Bateu! Tente focar no tempo!"); oX = 320; dTime = 20; oSpd = 5; dY = 90; }
         }, 20); activeIntervals.push(tLoop, gLoop);
     }
     function jump() { if(!dJump) { dVy = -8; dJump = true; } }
